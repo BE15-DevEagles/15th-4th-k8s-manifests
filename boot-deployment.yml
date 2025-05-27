@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: boot-deployment
+  namespace: deveagles
+spec:
+  selector:
+    matchLabels:
+      app: boot
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: boot
+    spec:
+      containers:
+        - name: boot-container
+          image: gyeongmin03/k8s-boot-ing:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: REDIS_HOST
+              value: "redis-service"
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka-service:9092"
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "300m"
+            limits:
+              memory: "1Gi"
+              cpu: "600m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: boot-service
+  namespace: deveagles
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8001
+      targetPort: 8080
+  selector:
+    app: boot
