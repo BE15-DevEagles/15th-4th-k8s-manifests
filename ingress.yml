@@ -18,6 +18,13 @@ spec:
                 name: vue-service
                 port:
                   number: 8000
+          - path: /api(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: boot-service
+                port:
+                  number: 8001
           - path: /boot(/|$)(.*)
             pathType: ImplementationSpecific
             backend:
