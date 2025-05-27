@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: boot-container
-          image: gyeongmin03/k8s-boot-ing:latest
+          image: 64etuor/k8s-boot-ing:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
